@@ -1,8 +1,9 @@
 #!/bin/sh
 
 # get name of directory to split
-if [ $# -lt 1 ]; then
-    printf "arguments missing: \$dirname \n"
+if [ $# -lt 2 ];
+then
+    printf "arguments missing: \$dirname \$dirlimit \n"
     exit 1
 fi
 dirname=$1
@@ -14,8 +15,16 @@ then
     exit 2
 fi
 
+# check if dirlimit > 0
+if [ "$2" -gt 0 ] 2>/dev/null ;
+then
+    dirlimit=$2
+else
+    printf "\$dirlimit shoud be greater than 0 \n"
+    exit 3
+fi
+
 # move files
-dirlimit=200
 count=0
 count_file=0
 count_dir=0
@@ -40,5 +49,5 @@ do
 done
 
 # status
-echo "dir:" $count
-echo "file:" $count_file
+echo "dir:" $count_dir
+echo "file:" $count
